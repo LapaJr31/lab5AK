@@ -12,8 +12,7 @@ MODULE_LICENSE("Dual BSD/GPL");
 
 static unsigned int print_count = 1;
 module_param(print_count, uint, 0444);
-MODULE_PARM_DESC(print_count, "A parameter that determines the number of times "
-                              "'Hello, world!' is printed");
+MODULE_PARM_DESC(print_count, "A parameter that determines the number of times 'Hello, world!' is printed");
 
 struct hello_time {
   struct list_head list;
