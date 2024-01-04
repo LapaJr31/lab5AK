@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: GPL-2.0-or-later OR BSD-2-Clause
 #include <linux/init.h>
 #include <linux/ktime.h>
 #include <linux/list.h>
@@ -12,7 +11,8 @@ MODULE_LICENSE("Dual BSD/GPL");
 
 static unsigned int print_count = 1;
 module_param(print_count, uint, 0444);
-MODULE_PARM_DESC(print_count, "A parameter that determines the number of times 'Hello, world!' is printed");
+MODULE_PARM_DESC(print_count, "A parameter that determines the number of times "
+                              "'Hello, world!' is printed");
 
 struct hello_time {
   struct list_head list;
@@ -25,15 +25,17 @@ static int __init hello_init(void) {
   struct hello_time *time_entry;
   unsigned int i;
 
-  if (print_count == 0 || (print_count >= 5 && print_count <= 10)) {
-    pr_warn("Warning: print_count is 0 or between 5 and 10\n");
-  } else if (print_count > 10) {
-    pr_err("Error: print_count is greater than 10\n");
-    return -EINVAL;
-  }
+  BUG_ON(print_count > 10);
 
   for (i = 0; i < print_count; i++) {
-    time_entry = kmalloc(sizeof(*time_entry), GFP_KERNEL);
+    if (i == 4) {
+      time_entry = NULL;
+    } else {
+      time_entry = kmalloc(sizeof(*time_entry), GFP_KERNEL);
+    }
+
+    BUG_ON(time_entry == NULL);
+
     time_entry->time = ktime_get();
     list_add_tail(&time_entry->list, &hello_time_list);
     pr_emerg("Hello, world!\n");
