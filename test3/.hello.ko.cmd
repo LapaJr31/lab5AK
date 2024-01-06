@@ -1,1 +1,0 @@
-cmd_/home/lpss/src/examples/lab3AK/test3/hello.ko := ccache arm-linux-gnueabihf-ld -r -EL -z noexecstack -T ./scripts/module-common.lds -T ./arch/arm/kernel/module.lds  --build-id  -o /home/lpss/src/examples/lab3AK/test3/hello.ko /home/lpss/src/examples/lab3AK/test3/hello.o /home/lpss/src/examples/lab3AK/test3/hello.mod.o ;  true
